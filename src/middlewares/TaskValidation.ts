@@ -14,18 +14,18 @@ const taskCreateValidation = () => {
       .withMessage('A prioridade deve ser baixa, média ou alta. '),
 
       body('dateConclusion')
-      .optional() // Faz com que o campo seja opcional
+      .optional({ nullable: true }) // Permite que o campo seja omitido ou nulo
       .isISO8601() // Verifica se é uma data válida no formato ISO 8601
       .withMessage('A data deve ser válida.')
       .custom((value: string) => {
         const currentDate = new Date();
         const conclusionDate = new Date(value);
-
+    
         if (conclusionDate <= currentDate) {
           throw new Error('Defina uma data válida.');
         }
         return true;
-      }),
+      })
   ];
 };
 
